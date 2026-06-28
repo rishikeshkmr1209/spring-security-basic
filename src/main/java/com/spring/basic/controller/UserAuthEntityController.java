@@ -1,6 +1,7 @@
 package com.spring.basic.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +29,11 @@ public class UserAuthEntityController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserAuthEntity authEntity){
         authEntity.setPassword(encoder.encode(authEntity.getPassword()));
-     
-        authEntityService.save(authEntity);
-
+        try {
+            authEntityService.save(authEntity);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(409).body("Username already exists");
+        }
         return ResponseEntity.status(200).body("Successfully persisted");
 
 

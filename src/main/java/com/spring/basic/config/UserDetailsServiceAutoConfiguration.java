@@ -3,8 +3,7 @@ package com.spring.basic.config;
 import java.util.List;
 
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.boot.security.autoconfigure.SecurityProperties;
-
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -18,6 +17,7 @@ import org.springframework.util.StringUtils;
 @Configuration
 public class UserDetailsServiceAutoConfiguration {
 //Commenting it once we tried to create user from UserAuthEntityController as UserAuthEntityService also extends UserDetailsService and hence its bean will also get created.
+//Note: InMemoryUserDetailsManager extends UserDetailsManager which in turn extends UserDetailsService
 /* 
     @Bean
     @Primary
@@ -43,6 +43,7 @@ public class UserDetailsServiceAutoConfiguration {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
 
     
 

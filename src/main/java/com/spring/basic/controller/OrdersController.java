@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/orders")
@@ -64,4 +66,10 @@ public class OrdersController {
 
     public record Order(Long id, String customerName, String status) {
     }
+
+    @GetMapping("/hello")
+    public String greetings() {
+        return "Greetings! ";
+    }
+    
 }

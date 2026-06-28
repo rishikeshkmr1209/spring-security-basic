@@ -22,7 +22,7 @@ public class SecurityConfig {
         http
                 .authenticationProvider(authenticationProvider)
                 .csrf(csrf -> csrf.disable())
-                .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()))//controls iframe embedding protection
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/orders/**").permitAll()
                         .requestMatchers("/auth/register").permitAll()
@@ -34,8 +34,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) { //UserDetailsService is coming from UserAuthEntityService as it implements it
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
